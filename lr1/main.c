@@ -1,30 +1,30 @@
 #include "employee_filtering.h"
 #include <stdlib.h>
+#include "mpi.h"
+
 
 int main()
 {
 	initializeCurrentYear();
-	int currentYear = *currentYearPtr;
 
-	const char *filename = "employees.csv";
-	FILE *file = fopen(filename, "r");
+	MPI_Init(NULL, NULL);
 
-	validateFile(file);
-	int size = countLines(file);
-	Employee *employees = readCSV(filename, size);
+	int world_size, world_rank;
+	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+	MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
-	fclose(file);
-
-	printf("Filtered Employees:\n");
-	for (int i = 0; i < size; i++)
+	int size, fsize;
+	Employee *list, *flist;
+	if (world_rank == 0)
 	{
-		if (currentYear - employees[i].exp_y > 5)
-		{
-			printf("%s %s\n", employees[i].fname, employees[i].lname);
-		}
+		initializeEmployees("employees.csv", &list, &size);
 	}
+	filterEmployees(list, 0, size, &flist, &fsize);
 
-	free(employees);
+	free(flist);
+	free(list);
 	free(currentYearPtr);
+
+	MPI_Finalize();
 	return 0;
 }

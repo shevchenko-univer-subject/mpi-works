@@ -88,3 +88,44 @@ void initializeCurrentYear()
         *currentYearPtr = tm_now->tm_year + 1900;
     }
 }
+
+
+void filterEmployees(Employee *list, int start, int end, Employee **flist_p, int *fsize_p)
+{
+	Employee **flist_ptrs = malloc(sizeof(Employee*) * (end - start));
+	int fsize;
+	int f = 0;
+	// filter elements and save their pointers
+	for (int i = start; i < end; i++)
+	{
+		if (*currentYearPtr - list[i].exp_y > 5)
+		{
+			flist_ptrs[f] = &list[i];
+			f++;
+		}
+	}
+
+	fsize = f;
+	*flist_p = (Employee *)malloc(sizeof(Employee) * fsize);
+	// save filtered elements 
+	for(int i = 0; i < fsize; i++)
+	{
+		(*flist_p)[i] = *flist_ptrs[i];
+	}
+
+	*fsize_p = fsize;
+	free(flist_ptrs);
+}
+
+
+void initializeEmployees(char *filename, Employee **employees, int *size_p)
+{
+	FILE *file = fopen(filename, "r");
+
+	validateFile(file);
+	*size_p = countLines(file);
+	
+	*employees = readCSV(filename, *size_p);
+	fclose(file);
+}
+
