@@ -59,7 +59,7 @@ void initializeCurrentYear();
 
 int countLines(FILE *file);
 
-void filterEmployees(Employee *list, int start, int end, Employee **flist_p, int *fsize_p);
+void filterEmployees(Employee *list, int size, Employee **flist_p, int *fsize_p);
 
 void initializeEmployees(char *filename, Employee **employees, int *size_p);
 

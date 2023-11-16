@@ -1,28 +1,159 @@
 #include "employee_filtering.h"
 #include <stdlib.h>
+#include <string.h>
 #include "mpi.h"
+
+
+void printEmployees(int wrank, Employee *list, int size)
+{
+	if (wrank == 0)
+	{
+		for(int i = 0; i < size; i++)
+		{
+			Employee emp = list[i];
+			printf("%s : %s : %d : %d", emp.fname, emp.lname, emp.birth, emp.exp_y);
+		}
+	}
+}
+
+
+void calculatePartitionIndices(int wrank, int wsize, int lsize, int *start, int *end, int *chunk_size)
+{
+	*start = wrank * lsize / wsize;
+	*end = (wrank + 1) * lsize / wsize;
+	*chunk_size = *end - *start;
+}
+
+
+void mainProcessInitializeEmployees(int wrank, char *filename, Employee **list, int *size)
+{
+	if (wrank == 0)
+	{
+		initializeEmployees("employees.csv", list, size);
+	}
+}
+
+
+void mainProcessSendChunks(int wrank, int wsize, Employee *list, int list_size)
+{
+	if (wrank == 0)
+	{
+		for(int i = 1; i < wsize; i++)
+		{
+			int start, end, chunk_size;
+			calculatePartitionIndices(i, wsize, list_size,
+					&start, &end, &chunk_size);
+
+			MPI_Send(&list[start], chunk_size * sizeof(Employee), 
+					MPI_BYTE, i, 0, MPI_COMM_WORLD);
+		}
+	}
+}
+
+void bcastSize(int *size_p)
+{
+	MPI_Bcast(size_p, 1, MPI_INT, 0, MPI_COMM_WORLD);
+}
+
+
+void initializeSizeAndRank(int *wsize, int *wrank)
+{
+	MPI_Comm_size(MPI_COMM_WORLD, wsize);
+	MPI_Comm_rank(MPI_COMM_WORLD, wrank);
+}
+
+
+void otherProcessesRecvChunk(int wrank, int wsize, int size, 
+		Employee **sublist, int *chunk_size_p) {
+    if (wrank != 0) {
+        int chunk_size;
+        calculatePartitionIndices(wrank, wsize, size, 
+			NULL, NULL, &chunk_size);
+        *chunk_size_p = chunk_size;
+        *sublist = (Employee*)malloc(sizeof(Employee) * chunk_size);
+        MPI_Recv(*sublist, chunk_size * sizeof(Employee), 
+			MPI_BYTE, 0, 0, MPI_COMM_WORLD,
+		       	MPI_STATUS_IGNORE);
+    }
+}
+
+
+void summirizeFilteredSize(int chunk_size, int *total_size)
+{
+	MPI_Reduce(&chunk_size, total_size, 1, MPI_INT, 
+			MPI_SUM, 0, MPI_COMM_WORLD);	
+}
+
+
+void collectFilteredLists(int wrank, int wsize, Employee** total_flist, 
+		int total_fsize, Employee* chunk_flist, int chunk_fsize) 
+{
+	if (wrank == 0) 
+	{
+		*total_flist = (Employee *)malloc(sizeof(Employee) * total_fsize);
+
+		memcpy(*total_flist, chunk_flist, chunk_fsize * sizeof(Employee));
+
+		int offset = chunk_fsize;
+		MPI_Status status;
+
+		for (int i = 1; i < wsize; i++) {
+			int size;
+			MPI_Recv(&size, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &status);
+
+			MPI_Recv(*total_flist + offset, size * sizeof(Employee), 
+					MPI_BYTE, i, 1, MPI_COMM_WORLD, &status);
+			offset += size;
+		}
+	} else {
+		MPI_Send(&chunk_fsize, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+		MPI_Send(chunk_flist, chunk_fsize * sizeof(Employee), 
+				MPI_BYTE, 0, 1, MPI_COMM_WORLD);
+	}
+}
 
 
 int main()
 {
+	MPI_Init(NULL, NULL);
 	initializeCurrentYear();
 
-	MPI_Init(NULL, NULL);
-
 	int world_size, world_rank;
-	MPI_Comm_size(MPI_COMM_WORLD, &world_size);
-	MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+	int total_size, chunk_size, chunk_fsize, total_fsize;
+	Employee *total_list = NULL, 
+		 *chunk_list = NULL,
+		 *chunk_flist = NULL, 
+		 *total_flist = NULL;
 
-	int size, fsize;
-	Employee *list, *flist;
+	initializeSizeAndRank(&world_size, &world_rank);
+
+	mainProcessInitializeEmployees(world_rank, "employees.csv", 
+			&total_list, &total_size);
+	bcastSize(&total_size);
+
+	mainProcessSendChunks(world_rank, world_size, total_list, total_size);
+
+	otherProcessesRecvChunk(world_rank, world_size, total_size, 
+			&chunk_list, &chunk_size);
+
+	filterEmployees(chunk_list, chunk_size, &chunk_flist, 
+			&chunk_fsize);
+
+	summirizeFilteredSize(chunk_fsize, &total_fsize);
+	
+	collectFilteredLists(world_rank, world_size, &total_flist,
+			   	total_fsize, chunk_flist, chunk_fsize);
+
+	printEmployees(world_rank, total_flist, total_fsize);
+
 	if (world_rank == 0)
 	{
-		initializeEmployees("employees.csv", &list, &size);
+		free(total_list);
+		free(total_flist);
 	}
-	filterEmployees(list, 0, size, &flist, &fsize);
+	free(chunk_list);
+	free(chunk_flist);
 
-	free(flist);
-	free(list);
 	free(currentYearPtr);
 
 	MPI_Finalize();

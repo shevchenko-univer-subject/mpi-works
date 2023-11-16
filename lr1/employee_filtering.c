@@ -80,23 +80,23 @@ Employee* readCSV(const char *filename, int size)
 
 void initializeCurrentYear()
 {
-    if (currentYearPtr == NULL)
-    {
-        currentYearPtr = (int *)malloc(sizeof(int));
-        time_t now = time(NULL);
-        struct tm *tm_now = localtime(&now);
-        *currentYearPtr = tm_now->tm_year + 1900;
-    }
+	if (currentYearPtr == NULL)
+	{
+		currentYearPtr = (int *)malloc(sizeof(int));
+		time_t now = time(NULL);
+		struct tm *tm_now = localtime(&now);
+		*currentYearPtr = tm_now->tm_year + 1900;
+	}
 }
 
 
-void filterEmployees(Employee *list, int start, int end, Employee **flist_p, int *fsize_p)
+void filterEmployees(Employee *list, int size, Employee **flist_p, int *fsize_p)
 {
-	Employee **flist_ptrs = malloc(sizeof(Employee*) * (end - start));
+	Employee **flist_ptrs = malloc(sizeof(Employee*) * size);
 	int fsize;
 	int f = 0;
-	// filter elements and save their pointers
-	for (int i = start; i < end; i++)
+
+	for (int i = 0; i < size; i++)
 	{
 		if (*currentYearPtr - list[i].exp_y > 5)
 		{
@@ -107,7 +107,7 @@ void filterEmployees(Employee *list, int start, int end, Employee **flist_p, int
 
 	fsize = f;
 	*flist_p = (Employee *)malloc(sizeof(Employee) * fsize);
-	// save filtered elements 
+
 	for(int i = 0; i < fsize; i++)
 	{
 		(*flist_p)[i] = *flist_ptrs[i];
