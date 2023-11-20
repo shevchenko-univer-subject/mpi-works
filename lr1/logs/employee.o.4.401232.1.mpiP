@@ -1,0 +1,203 @@
+@ mpiP
+@ Command : ./employee.o 
+@ Version                  : 3.5.0
+@ MPIP Build date          : Nov 13 2023, 22:38:24
+@ Start time               : 2023 11 20 12:48:19
+@ Stop time                : 2023 11 20 12:48:19
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -c -p -y -t 1.0 -k 2 -f ./logs
+@ Collector Rank           : 0
+@ Collector PID            : 401232
+@ Final Output Dir         : ./logs
+@ Report generation        : Single collector task
+
+---------------------------------------------------------------------------
+@--- Task Time Statistics (seconds) ---------------------------------------
+---------------------------------------------------------------------------
+                     AppTime           MPITime   MPI%   App Task   MPI Task
+Max                 0.028854          0.000535                 3          2
+Mean                0.028714          0.000512
+Min                 0.028372          0.000477                 2          0
+Stddev              0.000229          0.000025
+Aggregate           0.114854          0.002047   1.78
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%      Count    COV
+Barrier                 9      0.167    0.15    8.17          1   0.00
+Barrier                25      0.167    0.15    8.16          1   0.00
+Barrier                17      0.164    0.14    8.02          1   0.00
+Barrier                 1      0.164    0.14    8.01          1   0.00
+Bcast                  18      0.115    0.10    5.63          1   0.00
+Bcast                  26      0.114    0.10    5.58          1   0.00
+Bcast                  10      0.112    0.10    5.48          1   0.00
+Barrier                32     0.0717    0.06    3.50          1   0.00
+Barrier                 8     0.0716    0.06    3.50          1   0.00
+Barrier                16     0.0706    0.06    3.45          1   0.00
+Recv                   29     0.0617    0.05    3.01          1   0.00
+Barrier                24     0.0577    0.05    2.82          1   0.00
+Recv                    5     0.0572    0.05    2.80          3   0.00
+Send                    7      0.056    0.05    2.74          3   0.00
+Recv                   13     0.0499    0.04    2.44          1   0.00
+Reduce                 23     0.0472    0.04    2.31          1   0.00
+Reduce                  6     0.0437    0.04    2.13          1   0.00
+Send                   14     0.0422    0.04    2.06          1   0.00
+Barrier                19     0.0407    0.04    1.99          1   0.00
+Recv                   21     0.0393    0.03    1.92          1   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Send                    7          3   2.38e+03        792  57.28
+Send                   20          1        648        648  15.62
+Send                   28          1        540        540  13.02
+Send                   12          1        540        540  13.02
+Reduce                 31          1          4          4   0.10
+Send                   22          1          4          4   0.10
+Reduce                 23          1          4          4   0.10
+Send                   30          1          4          4   0.10
+Reduce                 15          1          4          4   0.10
+Reduce                  6          1          4          4   0.10
+Send                   14          1          4          4   0.10
+Bcast                  26          1          4          4   0.10
+Bcast                  18          1          4          4   0.10
+Bcast                  10          1          4          4   0.10
+Bcast                   2          1          4          4   0.10
+---------------------------------------------------------------------------
+@--- Aggregate Collective Time (top twenty, descending) -------------------
+---------------------------------------------------------------------------
+Call                 MPI Time %             Comm Size             Data Size
+Bcast                     0.782          0 -        7          0 -        7
+Reduce                    0.782          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Aggregate Point-To-Point Sent (top twenty, descending) ---------------
+---------------------------------------------------------------------------
+Call                 MPI Sent %             Comm Size             Data Size
+Send                       98.9          0 -        7        512 -     1023
+Send                      0.289          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Callsites: 32 --------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 0x7f948741050f           [unknown]                Barrier
+  1   1 0x7f94874209fa           [unknown]                
+  2   0 0x7f94874106b6           [unknown]                Bcast
+  2   1 0x7f9487420a8c           [unknown]                
+  3   0 0x7f948741050f           [unknown]                Barrier
+  3   1 0x7f94874209fa           [unknown]                
+  4   0 0x7f948741aa4a           [unknown]                Recv
+  4   1 0x7f94874257ad           [unknown]                
+  5   0 0x7f948741aa4a           [unknown]                Recv
+  5   1 0x7f94874257ad           [unknown]                
+  6   0 0x7f948741ad52           [unknown]                Reduce
+  6   1 0x7f948742599a           [unknown]                
+  7   0 0x7f948741c202           [unknown]                Send
+  7   1 0x7f948742646b           [unknown]                
+  8   0 0x7f948741050f           [unknown]                Barrier
+  8   1 0x7f94874209fa           [unknown]                
+  9   0 0x7f116a81050f           [unknown]                Barrier
+  9   1 0x7f116a8209fa           [unknown]                
+ 10   0 0x7f116a8106b6           [unknown]                Bcast
+ 10   1 0x7f116a820a8c           [unknown]                
+ 11   0 0x7f116a81050f           [unknown]                Barrier
+ 11   1 0x7f116a8209fa           [unknown]                
+ 12   0 0x7f116a81c202           [unknown]                Send
+ 12   1 0x7f116a82646b           [unknown]                
+ 13   0 0x7f116a81aa4a           [unknown]                Recv
+ 13   1 0x7f116a8257ad           [unknown]                
+ 14   0 0x7f116a81c202           [unknown]                Send
+ 14   1 0x7f116a82646b           [unknown]                
+ 15   0 0x7f116a81ad52           [unknown]                Reduce
+ 15   1 0x7f116a82599a           [unknown]                
+ 16   0 0x7f116a81050f           [unknown]                Barrier
+ 16   1 0x7f116a8209fa           [unknown]                
+ 17   0 0x7fa6dc81050f           [unknown]                Barrier
+ 17   1 0x7fa6dc8209fa           [unknown]                
+ 18   0 0x7fa6dc8106b6           [unknown]                Bcast
+ 18   1 0x7fa6dc820a8c           [unknown]                
+ 19   0 0x7fa6dc81050f           [unknown]                Barrier
+ 19   1 0x7fa6dc8209fa           [unknown]                
+ 20   0 0x7fa6dc81c202           [unknown]                Send
+ 20   1 0x7fa6dc82646b           [unknown]                
+ 21   0 0x7fa6dc81aa4a           [unknown]                Recv
+ 21   1 0x7fa6dc8257ad           [unknown]                
+ 22   0 0x7fa6dc81c202           [unknown]                Send
+ 22   1 0x7fa6dc82646b           [unknown]                
+ 23   0 0x7fa6dc81ad52           [unknown]                Reduce
+ 23   1 0x7fa6dc82599a           [unknown]                
+ 24   0 0x7fa6dc81050f           [unknown]                Barrier
+ 24   1 0x7fa6dc8209fa           [unknown]                
+ 25   0 0x7f5b0d81050f           [unknown]                Barrier
+ 25   1 0x7f5b0d8209fa           [unknown]                
+ 26   0 0x7f5b0d8106b6           [unknown]                Bcast
+ 26   1 0x7f5b0d820a8c           [unknown]                
+ 27   0 0x7f5b0d81050f           [unknown]                Barrier
+ 27   1 0x7f5b0d8209fa           [unknown]                
+ 28   0 0x7f5b0d81c202           [unknown]                Send
+ 28   1 0x7f5b0d82646b           [unknown]                
+ 29   0 0x7f5b0d81aa4a           [unknown]                Recv
+ 29   1 0x7f5b0d8257ad           [unknown]                
+ 30   0 0x7f5b0d81c202           [unknown]                Send
+ 30   1 0x7f5b0d82646b           [unknown]                
+ 31   0 0x7f5b0d81ad52           [unknown]                Reduce
+ 31   1 0x7f5b0d82599a           [unknown]                
+ 32   0 0x7f5b0d81050f           [unknown]                Barrier
+ 32   1 0x7f5b0d8209fa           [unknown]                
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all callsites, milliseconds): 32 -----------
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Barrier              9       1    0.1673    0.1673    0.1673      2      2
+Barrier             25       1    0.1671    0.1671    0.1671      3      3
+Barrier             17       1    0.1641    0.1641    0.1641      1      1
+Barrier              1       1    0.1639    0.1639    0.1639      0      0
+Bcast               18       1    0.1153    0.1153    0.1153      1      1
+Bcast               26       1    0.1143    0.1143    0.1143      3      3
+Bcast               10       1    0.1123    0.1123    0.1123      2      2
+Barrier             32       1    0.0717    0.0717    0.0717      3      3
+Barrier              8       1   0.07157   0.07157   0.07157      0      0
+Barrier             16       1   0.07064   0.07064   0.07064      2      2
+Recv                29       1   0.06168   0.06168   0.06168      3      3
+Barrier             24       1    0.0577    0.0577    0.0577      1      1
+Recv                 5       1   0.05725   0.05725   0.05725      0      0
+Send                 7       1   0.05603   0.05603   0.05603      0      0
+Recv                13       1   0.04986   0.04986   0.04986      2      2
+Reduce              23       1   0.04721   0.04721   0.04721      1      1
+Reduce               6       1   0.04369   0.04369   0.04369      0      0
+Send                14       1   0.04221   0.04221   0.04221      2      2
+Barrier             19       1   0.04067   0.04067   0.04067      1      1
+Recv                21       1   0.03927   0.03927   0.03927      1      1
+Reduce              15       1   0.03821   0.03821   0.03821      2      2
+Recv                 4       1    0.0371    0.0371    0.0371      0      0
+Send                12       1   0.03704   0.03704   0.03704      2      2
+Send                22       1   0.03585   0.03585   0.03585      1      1
+Reduce              31       1   0.03159   0.03159   0.03159      3      3
+Bcast                2       1   0.03133   0.03133   0.03133      0      0
+Send                30       1   0.02922   0.02922   0.02922      3      3
+Send                28       1   0.02239   0.02239   0.02239      3      3
+Send                20       1   0.02071   0.02071   0.02071      1      1
+Barrier             11       1    0.0175    0.0175    0.0175      2      2
+Barrier              3       1   0.01629   0.01629   0.01629      0      0
+Barrier             27       1   0.01592   0.01592   0.01592      3      3
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all callsites, sent bytes): 15 -----
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Send                 7       1      2376      2376      2376      0      0
+Send                20       1       648       648       648      1      1
+Send                12       1       540       540       540      2      2
+Send                28       1       540       540       540      3      3
+Bcast                2       1         4         4         4      0      0
+Bcast               10       1         4         4         4      2      2
+Bcast               18       1         4         4         4      1      1
+Bcast               26       1         4         4         4      3      3
+Reduce               6       1         4         4         4      0      0
+Reduce              15       1         4         4         4      2      2
+Reduce              23       1         4         4         4      1      1
+Reduce              31       1         4         4         4      3      3
+Send                14       1         4         4         4      2      2
+Send                22       1         4         4         4      1      1
+Send                30       1         4         4         4      3      3
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

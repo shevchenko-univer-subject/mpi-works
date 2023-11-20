@@ -1,0 +1,79 @@
+@ mpiP
+@ Command : ./employee.o 
+@ Version                  : 3.5.0
+@ MPIP Build date          : Nov 13 2023, 22:38:24
+@ Start time               : 2023 11 20 12:48:42
+@ Stop time                : 2023 11 20 12:48:42
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -c -p -y -t 1.0 -k 2 -f ./logs
+@ Collector Rank           : 0
+@ Collector PID            : 401382
+@ Final Output Dir         : ./logs
+@ Report generation        : Single collector task
+
+---------------------------------------------------------------------------
+@--- Task Time Statistics (seconds) ---------------------------------------
+---------------------------------------------------------------------------
+                     AppTime           MPITime   MPI%   App Task   MPI Task
+Max                 0.026680          0.000185                 0          0
+Mean                0.026680          0.000185
+Min                 0.026680          0.000185                 0          0
+Stddev                  -nan              -nan
+Aggregate           0.026680          0.000185   0.69
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%      Count    COV
+Barrier                 1      0.109    0.41   59.17          1   0.00
+Reduce                  4     0.0269    0.10   14.58          1   0.00
+Bcast                   2     0.0268    0.10   14.55          1   0.00
+Barrier                 3     0.0109    0.04    5.89          1   0.00
+Barrier                 5     0.0107    0.04    5.81          1   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Reduce                  4          1          4          4  50.00
+Bcast                   2          1          4          4  50.00
+---------------------------------------------------------------------------
+@--- Aggregate Collective Time (top twenty, descending) -------------------
+---------------------------------------------------------------------------
+Call                 MPI Time %             Comm Size             Data Size
+Bcast                      2.17          0 -        7          0 -        7
+Reduce                     2.17          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Aggregate Point-To-Point Sent (top twenty, descending) ---------------
+---------------------------------------------------------------------------
+No point to point operations to report
+---------------------------------------------------------------------------
+@--- Callsites: 5 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 0x7f62dde1050f           [unknown]                Barrier
+  1   1 0x7f62dde209fa           [unknown]                
+  2   0 0x7f62dde106b6           [unknown]                Bcast
+  2   1 0x7f62dde20a8c           [unknown]                
+  3   0 0x7f62dde1050f           [unknown]                Barrier
+  3   1 0x7f62dde209fa           [unknown]                
+  4   0 0x7f62dde1ad52           [unknown]                Reduce
+  4   1 0x7f62dde2599a           [unknown]                
+  5   0 0x7f62dde1050f           [unknown]                Barrier
+  5   1 0x7f62dde209fa           [unknown]                
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all callsites, milliseconds): 5 ------------
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Barrier              1       1    0.1092    0.1092    0.1092      0      0
+Reduce               4       1   0.02691   0.02691   0.02691      0      0
+Bcast                2       1   0.02685   0.02685   0.02685      0      0
+Barrier              3       1   0.01087   0.01087   0.01087      0      0
+Barrier              5       1   0.01073   0.01073   0.01073      0      0
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all callsites, sent bytes): 2 ------
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Bcast                2       1         4         4         4      0      0
+Reduce               4       1         4         4         4      0      0
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------
