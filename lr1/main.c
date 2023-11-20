@@ -11,26 +11,52 @@ void printEmployees(int wrank, Employee *list, int size)
 		for(int i = 0; i < size; i++)
 		{
 			Employee emp = list[i];
-			printf("%s : %s : %d : %d", emp.fname, emp.lname, emp.birth, emp.exp_y);
+			printf("%s : %s : %d : %d\n", 
+					emp.fname, emp.lname, 
+					emp.birth, emp.exp_y);
 		}
 	}
 }
 
 
-void calculatePartitionIndices(int wrank, int wsize, int lsize, int *start, int *end, int *chunk_size)
+void calculatePartitionIndices(int wrank, int wsize, int lsize,
+		int *start, int *end, int *chunk_size)
 {
-	*start = wrank * lsize / wsize;
-	*end = (wrank + 1) * lsize / wsize;
-	*chunk_size = *end - *start;
+	int base_chunk_size = lsize / wsize;
+	int remainder = lsize % wsize;
+
+	if (wrank < remainder) {
+		*start = wrank * (base_chunk_size + 1);
+		*end = *start + base_chunk_size;
+	} else {
+		*start = wrank * base_chunk_size + remainder;
+		*end = *start + base_chunk_size - 1;
+	}
+
+	*chunk_size = *end - *start + 1;
 }
 
 
-void mainProcessInitializeEmployees(int wrank, char *filename, Employee **list, int *size)
+void mainProcessInitializeEmployees(int wrank, char *filename, 
+		Employee **list, int *size)
 {
 	if (wrank == 0)
 	{
 		initializeEmployees("employees.csv", list, size);
 	}
+}
+
+
+void bcastSize(int *size_p)
+{
+	MPI_Bcast(size_p, 1, MPI_INT, 0, MPI_COMM_WORLD);
+}
+
+
+void initializeSizeAndRank(int *wsize, int *wrank)
+{
+	MPI_Comm_size(MPI_COMM_WORLD, wsize);
+	MPI_Comm_rank(MPI_COMM_WORLD, wrank);
 }
 
 
@@ -50,31 +76,28 @@ void mainProcessSendChunks(int wrank, int wsize, Employee *list, int list_size)
 	}
 }
 
-void bcastSize(int *size_p)
+
+void otherProcessesRecvChunk(int wrank, int wsize, Employee *list,
+		  	int size, Employee **sublist, int *chunk_size_p)
 {
-	MPI_Bcast(size_p, 1, MPI_INT, 0, MPI_COMM_WORLD);
-}
+		int start, end, chunk_size;
+		calculatePartitionIndices(wrank, wsize, size, 
+			&start, &end, &chunk_size);
+		*chunk_size_p = chunk_size;
+	*sublist = (Employee *)malloc(sizeof(Employee) * chunk_size);
 
-
-void initializeSizeAndRank(int *wsize, int *wrank)
-{
-	MPI_Comm_size(MPI_COMM_WORLD, wsize);
-	MPI_Comm_rank(MPI_COMM_WORLD, wrank);
-}
-
-
-void otherProcessesRecvChunk(int wrank, int wsize, int size, 
-		Employee **sublist, int *chunk_size_p) {
-    if (wrank != 0) {
-        int chunk_size;
-        calculatePartitionIndices(wrank, wsize, size, 
-			NULL, NULL, &chunk_size);
-        *chunk_size_p = chunk_size;
-        *sublist = (Employee*)malloc(sizeof(Employee) * chunk_size);
-        MPI_Recv(*sublist, chunk_size * sizeof(Employee), 
-			MPI_BYTE, 0, 0, MPI_COMM_WORLD,
-		       	MPI_STATUS_IGNORE);
-    }
+	if (wrank != 0) 
+	{
+		MPI_Recv(*sublist, chunk_size * sizeof(Employee), 
+				MPI_BYTE, 0, 0, MPI_COMM_WORLD,
+				MPI_STATUS_IGNORE);
+	} else {
+		for(int i = start; i < chunk_size; i++)
+		{
+			(*sublist)[i] = list[i];
+			fflush(stdout);
+		}
+	}
 }
 
 
@@ -133,14 +156,18 @@ int main()
 
 	mainProcessSendChunks(world_rank, world_size, total_list, total_size);
 
-	otherProcessesRecvChunk(world_rank, world_size, total_size, 
-			&chunk_list, &chunk_size);
+	MPI_Barrier(MPI_COMM_WORLD);
+	otherProcessesRecvChunk(world_rank, world_size, total_list,
+			   	total_size, &chunk_list, &chunk_size);
 
+	MPI_Barrier(MPI_COMM_WORLD);
 	filterEmployees(chunk_list, chunk_size, &chunk_flist, 
 			&chunk_fsize);
 
+	MPI_Barrier(MPI_COMM_WORLD);
 	summirizeFilteredSize(chunk_fsize, &total_fsize);
 	
+	MPI_Barrier(MPI_COMM_WORLD);
 	collectFilteredLists(world_rank, world_size, &total_flist,
 			   	total_fsize, chunk_flist, chunk_fsize);
 
