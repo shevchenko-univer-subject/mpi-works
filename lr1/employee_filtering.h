@@ -2,6 +2,7 @@
 #define EMPLOYEE_FILTERING_H
 
 #include <stdio.h>  // For FILE
+#include <string.h>
 
 // Define the Employee structure
 typedef struct {
@@ -62,6 +63,8 @@ int countLines(FILE *file);
 void filterEmployees(Employee *list, int size, Employee **flist_p, int *fsize_p);
 
 void initializeEmployees(char *filename, Employee **employees, int *size_p);
+
+void printEmployees(Employee *list, int size);
 
 #endif // EMPLOYEE_FILTERING_H
 

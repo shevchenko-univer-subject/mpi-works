@@ -2,7 +2,7 @@
 CC = mpicc
 CFLAGS = -Wall -L/usr/local/lib -lmpiP -lmpi -lmpe -lm
 EXEC = employee.o
-SRC = main.c employee_filtering.c
+SRC = main.c employee_filtering.c localmpi.c
 
 # Build the MPI program
 all: $(SRC)

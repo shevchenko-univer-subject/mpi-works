@@ -118,6 +118,18 @@ void filterEmployees(Employee *list, int size, Employee **flist_p, int *fsize_p)
 }
 
 
+void printEmployees(Employee *list, int size)
+{
+	for(int i = 0; i < size; i++)
+	{
+		Employee emp = list[i];
+		printf("%s : %s : %d : %d\n", 
+				emp.fname, emp.lname, 
+				emp.birth, emp.exp_y);
+	}
+}
+
+
 void initializeEmployees(char *filename, Employee **employees, int *size_p)
 {
 	FILE *file = fopen(filename, "r");
