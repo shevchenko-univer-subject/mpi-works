@@ -11,15 +11,17 @@ all: $(SRC)
 # Run the MPI program
 # Usage: make run ARG=<number_of_processes>
 run:
-	mpirun -np $(ARG) ./$(EXEC)
+	mpirun -np $(NP) ./$(EXEC)
+
+qrun:
+	mpirun -np $(NP) ./$(EXEC) 2> /dev/null
 
 # Debug the MPI program
 debug:
-	mpirun -np 2 tmux split-window -h "gdb ./$(EXEC)"
+	mpirun -np 2 alacritty -e gdb ./$(EXEC)
 
 # Initialize the MPI environment
 init:
-	module load mpi/openmpi-x86_64
 	export FI_PROVIDER=sockets
 	export MPIP="-c -p -y -t 1.0 -k 2 -f ./logs"
 
