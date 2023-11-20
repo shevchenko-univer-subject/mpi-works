@@ -68,7 +68,7 @@ int main()
 			   	total_fsize, chunk_flist, chunk_fsize);
 	MPE_Log_event(ev3b, 0, "end reduce");
 
-	mainPrintEmployees(world_rank, total_flist, total_fsize);
+	mainPrintStatistic(world_rank, total_size, total_fsize);
 
 	if (world_rank == 0)
 	{

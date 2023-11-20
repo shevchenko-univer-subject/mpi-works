@@ -28,6 +28,17 @@ void calculatePartitionIndices(int wrank, int wsize, int lsize,
 }
 
 
+void mainPrintStatistic(int wrank, int total_size, int total_fsize)
+{
+
+	if(wrank == 0)
+	{
+		printf("Input:  %d records\n", total_size);
+		printf("Output: %d records\n", total_fsize);
+	}
+}
+
+
 void mainInitializeEmployees(int wrank, char *filename, 
 		Employee **list, int *size)
 {

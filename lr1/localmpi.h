@@ -83,3 +83,4 @@ void summirizeFilteredSize(int chunk_size, int *total_size);
  */
 void collectFilteredLists(int wrank, int wsize, Employee** total_flist, int total_fsize, Employee* chunk_flist, int chunk_fsize);
 
+void mainPrintStatistic(int wrank, int total_size, int total_fsize);
