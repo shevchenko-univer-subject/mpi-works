@@ -57,13 +57,39 @@ Employee* readCSV(const char *filename, int size);
  * Should be called once at the beginning of the program.
  */
 void initializeCurrentYear();
-
+/**
+ * Counts the number of lines in a given file.
+ * 
+ * @param file A pointer to a FILE object from which to count lines.
+ * @return The number of lines in the file.
+ */
 int countLines(FILE *file);
 
+/**
+ * Filters the given list of employees based on a specific criteria and returns a new list.
+ * 
+ * @param list The original list of employees to be filtered.
+ * @param size The number of employees in the original list.
+ * @param flist_p Pointer to store the filtered list of employees.
+ * @param fsize_p Pointer to store the number of employees in the filtered list.
+ */
 void filterEmployees(Employee *list, int size, Employee **flist_p, int *fsize_p);
 
+/**
+ * Reads employee data from a file and initializes an array of Employee structures.
+ * 
+ * @param filename The name of the file to read employee data from.
+ * @param employees Pointer to store the array of initialized Employee structures.
+ * @param size_p Pointer to store the number of employees read from the file.
+ */
 void initializeEmployees(char *filename, Employee **employees, int *size_p);
 
+/**
+ * Prints the details of each employee in the given list.
+ * 
+ * @param list The list of employees to be printed.
+ * @param size The number of employees in the list.
+ */
 void printEmployees(Employee *list, int size);
 
 #endif // EMPLOYEE_FILTERING_H
