@@ -37,9 +37,11 @@ int main()
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	MPE_Log_event(ev1a, 0, "start broadcast");
 	mainInitializeEmployees(world_rank, "employees.csv", 
 			&total_list, &total_size);
+
+	MPI_Barrier(MPI_COMM_WORLD);
+	MPE_Log_event(ev1a, 0, "start broadcast");
 	bcastSize(&total_size);
 
 	mainSendChunks(world_rank, world_size, total_list, total_size);
