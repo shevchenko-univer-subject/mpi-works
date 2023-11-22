@@ -5,28 +5,33 @@ CFLAGS = -lmpiP -lmpi -lmpe -lm
 EXEC = employee.o
 SRC = main.c employee_filtering.c localmpi.c
 MPIP = -c -p -y -t 1.0 -k 2 -f ./logs
+FI_PROVIDER = sockets
 
 all: $(SRC)
 	$(CC) $(PRE_CFLAGS) $(SRC) -o $(EXEC) $(CFLAGS)
 
 run:
-	mpirun -np $(NP) --host fedora:$(NP) ./$(EXEC)
+	mpirun -np $(NP) --host fedora:$(NP) \
+	       -x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC)
 
 qrun:
-	mpirun -np $(NP) --host fedora:$(NP) ./$(EXEC) 2> /dev/null
+	mpirun -np $(NP) --host fedora:$(NP) \
+	       -x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC) 2> /dev/null
 
 debug:
-	mpirun -np 2 alacritty -e gdb ./$(EXEC)
+	mpirun -np 2 alacritty -e gdb \
+	       -x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC)
 
 prof:
-	mpirun -np $(NP) --host fedora:$(NP)  -x MPIP="$(MPIP)" ./$(EXEC)
-
-init:
-	export FI_PROVIDER=sockets
-	export LD_PRELOAD=/usr/local/lib
+	mpirun -np $(NP) --host fedora:$(NP) \
+		-x MPIP="$(MPIP)" \
+		-x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC)
 
 gen_records:
 	ruby generator.rb > employees.csv
+
+parse_logs:
+	ruby parser.rb
 
 clean:
 	rm -f $(EXEC)
