@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void
+printMatrix(int **matrix, int rows, int cols);
+
+void
+multiplyMatrices(int **firstMatrix, int firstRows, int firstCols, 
+		int **secondMatrix, int secondRows, int secondCols, 
+		int ***resultMatrix);
+
+void
+initMatrix(int ***matrix, int *rows, 
+		int *cols, const char *filename);
