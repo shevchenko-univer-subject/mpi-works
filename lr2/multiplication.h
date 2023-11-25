@@ -8,7 +8,7 @@ printMatrix(int **matrix, int rows, int cols);
 void
 multiplyMatrices(int **firstMatrix, int firstRows, int firstCols, 
 		int **secondMatrix, int secondRows, int secondCols, 
-		int ***resultMatrix);
+		int ***resultMatrix, int *resultRows, int *resultCols);
 
 void
 initMatrix(int ***matrix, int *rows, 

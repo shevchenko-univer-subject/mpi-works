@@ -60,7 +60,7 @@ initMatrix(int ***matrix, int *rows,
 void
 multiplyMatrices(int **firstMatrix, int firstRows, int firstCols, 
 		int **secondMatrix, int secondRows, int secondCols, 
-		int ***resultMatrix) {
+		int ***resultMatrix, int *resultRows, int *resultCols) {
 
 	if (firstCols != secondRows)
 	{
@@ -69,6 +69,9 @@ multiplyMatrices(int **firstMatrix, int firstRows, int firstCols,
 	}
 
 	*resultMatrix = (int **)malloc(firstRows * sizeof(int *));
+	*resultRows = firstRows;
+	*resultCols = secondCols;
+
 	for (int i = 0; i < firstRows; i++)
 	{
 		(*resultMatrix)[i] = (int *)malloc(secondCols * sizeof(int));
