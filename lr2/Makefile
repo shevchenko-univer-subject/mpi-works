@@ -1,8 +1,8 @@
 CC=gcc
 MPICC=mpicc
 PREFLAGS=-Wall
-CFLAGS=-lmpiP -lmpi -lmpe -lm -o employee.o
-SRC= multiplication.c
+CFLAGS=-lmpiP -lmpi -lmpe -lm
+SRC= multiplication.c localmpi.c
 
 EXEC_GNU=g_multiplication.o
 EXEC_MPI=mpi_multiplication.o
@@ -30,7 +30,7 @@ mpi: $(SRC) $(MPI_MAIN)
 
 mpi_run: $(EXEC_MPI)
 	mpirun -np $(NP) --host fedora:$(NP) \
-	       -x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC_MPI) 2> /dev/null
+	       -x FI_PROVIDER=$(FI_PROVIDER) ./$(EXEC_MPI)
 
 mpi_debug:
 	mpirun -np 2 alacritty -e gdb \

@@ -13,3 +13,5 @@ multiplyMatrices(int **firstMatrix, int firstRows, int firstCols,
 void
 initMatrix(int ***matrix, int *rows, 
 		int *cols, const char *filename);
+void
+allocateMatrix(int ***matrix_p, int rows, int cols);

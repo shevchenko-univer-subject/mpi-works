@@ -52,7 +52,8 @@ initMatrix(int ***matrix, int *rows,
 	*cols = colCount;
 }
 
-void allocateMatrix(int ***matrix_p, int rows, int cols)
+void
+allocateMatrix(int ***matrix_p, int rows, int cols)
 {
 	*matrix_p = (int **)malloc(rows * sizeof(int *));
 	for (int i = 0; i < rows; i++)
@@ -63,29 +64,30 @@ void allocateMatrix(int ***matrix_p, int rows, int cols)
 void
 multiplyMatrices(int **firstMatrix, int firstRows, int firstCols, 
 		int **secondMatrix, int secondRows, int secondCols, 
-		int ***resultMatrix, int *resultRows, int *resultCols) {
-
+		int ***result_p, int *result_rows_p, int *result_cols_p)
+{
 	if (firstCols != secondRows)
 	{
 		printf("Matrix multiplication not possible.\n");
 		return;
 	}
 
-	*resultMatrix = (int **)malloc(firstRows * sizeof(int *));
-	*resultRows = firstRows;
-	*resultCols = secondCols;
+	*result_p = (int **)malloc(firstRows * sizeof(int *));
+	*result_rows_p = firstRows;
+	*result_cols_p = secondCols;
+	int result_rows = *result_rows_p;
+	int result_cols = *result_cols_p;
 
-	for (int i = 0; i < firstRows; i++)
-		(*resultMatrix)[i] = (int *)malloc(secondCols * sizeof(int));
+	allocateMatrix(result_p, result_rows, result_cols);
 
-	for (int i = 0; i < firstRows; i++)
-		for (int j = 0; j < secondCols; j++)
-			(*resultMatrix)[i][j] = 0;
+	for (int i = 0; i < result_rows; i++)
+		for (int j = 0; j < result_cols; j++)
+			(*result_p)[i][j] = 0;
 
-	for (int i = 0; i < firstRows; i++)
-		for (int j = 0; j < secondCols; j++)
+	for (int i = 0; i < result_rows; i++)
+		for (int j = 0; j < result_cols; j++)
 			for (int k = 0; k < firstCols; k++)
-				(*resultMatrix)[i][j] += 
+				(*result_p)[i][j] += 
 					firstMatrix[i][k] * secondMatrix[k][j];
 }
 
