@@ -29,11 +29,7 @@ initMatrix(int ***matrix, int *rows,
 		rowCount++;
 	}
 
-	*matrix = (int **)malloc(rowCount * sizeof(int *));
-	for (int i = 0; i < rowCount; i++)
-	{
-		(*matrix)[i] = (int *)malloc(colCount * sizeof(int));
-	}
+	allocateMatrix(matrix, rowCount, colCount);
 
 	rewind(file);
 
@@ -56,6 +52,13 @@ initMatrix(int ***matrix, int *rows,
 	*cols = colCount;
 }
 
+void allocateMatrix(int ***matrix_p, int rows, int cols)
+{
+	*matrix_p = (int **)malloc(rows * sizeof(int *));
+	for (int i = 0; i < rows; i++)
+		(*matrix_p)[i] = (int *)malloc(cols * sizeof(int));
+}
+
 
 void
 multiplyMatrices(int **firstMatrix, int firstRows, int firstCols, 
@@ -73,25 +76,17 @@ multiplyMatrices(int **firstMatrix, int firstRows, int firstCols,
 	*resultCols = secondCols;
 
 	for (int i = 0; i < firstRows; i++)
-	{
 		(*resultMatrix)[i] = (int *)malloc(secondCols * sizeof(int));
-	}
 
 	for (int i = 0; i < firstRows; i++)
-	{
 		for (int j = 0; j < secondCols; j++)
 			(*resultMatrix)[i][j] = 0;
-	}
 
 	for (int i = 0; i < firstRows; i++)
-	{
 		for (int j = 0; j < secondCols; j++)
-		{
 			for (int k = 0; k < firstCols; k++)
 				(*resultMatrix)[i][j] += 
 					firstMatrix[i][k] * secondMatrix[k][j];
-		}
-	}
 }
 
 
