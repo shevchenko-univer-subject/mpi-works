@@ -1,4 +1,5 @@
 #include <mpi.h>
+#include "mpe.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,18 +33,35 @@ void calculatePartitionIndices(int wrank, int wsize, int lsize,
 
 void simulate_motion(participle *particles, int num_particles, float time_interval) {
 	for (int i = 0; i < num_particles; i++) {
-		// Оновлення позиції кожної частинки
 		particles[i].position += particles[i].velocity * time_interval;
 	}
 }
 
 int main(int argc, char *argv[])
 {
+	// INTIALIZATION
 	MPI_Init(&argc, &argv);
+	MPE_Init_log();
+	int ev1a, ev1b, ev2a, ev2b, ev3a, ev3b, ev4a, ev4b;
+	ev1a = MPE_Log_get_event_number();
+	ev1b = MPE_Log_get_event_number();
+	ev2a = MPE_Log_get_event_number();
+	ev2b = MPE_Log_get_event_number();
+	ev3a = MPE_Log_get_event_number();
+	ev3b = MPE_Log_get_event_number();
+	ev4a = MPE_Log_get_event_number();
+	ev4b = MPE_Log_get_event_number();
 
 	int wrank, wsize;
 	MPI_Comm_rank(MPI_COMM_WORLD, &wrank);
 	MPI_Comm_size(MPI_COMM_WORLD, &wsize);
+	if(wrank == 0)
+	{
+		MPE_Describe_state(ev1a, ev1b, "Broadcast", "red");
+		MPE_Describe_state(ev2a, ev2b, "Compute", "blue");
+		MPE_Describe_state(ev3a, ev3b, "Reduce", "green");
+		MPE_Describe_state(ev4a, ev4b, "Sync", "orange");
+	}
 
 	const int nitems = 2;
 	int blocklengths[2] = {1, 1};
@@ -81,7 +99,6 @@ int main(int argc, char *argv[])
 		chunk = malloc(chunk_size * sizeof(participle));
 		memcpy(chunk, particles + start, chunk_size * sizeof(participle));
 
-		// Розсилка частин кожному процесу
 		for (int i = 1; i < wsize; i++)
 		{
 			int start_tmp, end_tmp, chunk_size_tmp;
@@ -107,6 +124,27 @@ int main(int argc, char *argv[])
 
 	float time_interval = 10.0;
 	simulate_motion(chunk, chunk_size, time_interval);
+
+	if(wrank != 0){
+		printf("2: will send on %d\n", wrank);
+		MPI_Send(&start, 1, MPI_INT, 0, MPI_START_TAG, MPI_COMM_WORLD);
+		MPI_Send(&chunk_size, 1, MPI_INT, 0, MPI_CHUNK_SIZE_TAG, MPI_COMM_WORLD);
+		MPI_Send(chunk, chunk_size, 
+				mpi_participle_type, 0, MPI_CHUNK_TAG, MPI_COMM_WORLD);
+	} else {
+		memcpy(particles, chunk, chunk_size * sizeof(participle));
+		for(int i = 1; i < wsize; i++) 
+		{
+			printf("2: will recv on %d\n", i);
+			int start_tmp, chunk_size_tmp;
+			MPI_Recv(&start_tmp, 1, MPI_INT, i, MPI_START_TAG, 
+					MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			MPI_Recv(&chunk_size_tmp, 1, MPI_INT, i, MPI_CHUNK_SIZE_TAG, 
+					MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			MPI_Recv(particles + start_tmp, chunk_size_tmp, 
+					mpi_participle_type, i, MPI_CHUNK_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		}
+	}
 
 	free(chunk);
 	if(wrank == 0)

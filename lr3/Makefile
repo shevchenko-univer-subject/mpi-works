@@ -27,7 +27,7 @@ gnu_run: $(EXEC_GNU)
 
 
 mpi: $(SRC) $(MPI_MAIN)
-	$(MPICC) $(PREFLAGS) $(SRC) localmpi.c $(MPI_MAIN) -o $(EXEC_MPI) $(CFLAGS)
+	$(MPICC) $(PREFLAGS) $(SRC) $(MPI_MAIN) -o $(EXEC_MPI) $(CFLAGS)
 
 mpi_run: $(EXEC_MPI)
 	mpirun -np $(NP) --host fedora:$(NP) \
