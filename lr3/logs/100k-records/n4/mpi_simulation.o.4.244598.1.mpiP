@@ -1,0 +1,195 @@
+@ mpiP
+@ Command : ./mpi_simulation.o 
+@ Version                  : 3.5.0
+@ MPIP Build date          : Nov 13 2023, 22:03:28
+@ Start time               : 2023 12 04 00:30:39
+@ Stop time                : 2023 12 04 00:30:39
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -c -p -y -t 1.0 -k 2 -f ./logs
+@ Collector Rank           : 0
+@ Collector PID            : 244598
+@ Final Output Dir         : ./logs
+@ Report generation        : Single collector task
+
+---------------------------------------------------------------------------
+@--- Task Time Statistics (seconds) ---------------------------------------
+---------------------------------------------------------------------------
+                     AppTime           MPITime   MPI%   App Task   MPI Task
+Max                 0.032911          0.005476                 1          3
+Mean                0.032498          0.004285
+Min                 0.032304          0.000810                 3          0
+Stddev              0.000279          0.002317
+Aggregate           0.129992          0.017138  13.18
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%      Count    COV
+Recv                   26       4.95    3.81   28.89          1   0.00
+Recv                   18       4.83    3.72   28.18          1   0.00
+Recv                   10       4.71    3.62   27.47          1   0.00
+Send                   12      0.411    0.32    2.40          1   0.00
+Send                    1      0.365    0.28    2.13          3   0.00
+Send                   19      0.342    0.26    2.00          1   0.00
+Send                   27      0.148    0.11    0.86          1   0.00
+Type_commit             7      0.137    0.11    0.80          1   0.00
+Type_commit            30      0.133    0.10    0.78          1   0.00
+Recv                   32      0.124    0.10    0.72          1   0.00
+Type_commit            22      0.119    0.09    0.69          1   0.00
+Type_commit            14      0.111    0.09    0.65          1   0.00
+Recv                    8      0.102    0.08    0.60          3   0.00
+Recv                   16     0.0949    0.07    0.55          1   0.00
+Recv                   24     0.0916    0.07    0.53          1   0.00
+Recv                    5      0.058    0.04    0.34          3   0.00
+Send                    6     0.0505    0.04    0.29          3   0.00
+Type_free              28      0.045    0.03    0.26          1   0.00
+Send                   31     0.0382    0.03    0.22          1   0.00
+Recv                    2     0.0357    0.03    0.21          3   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Send                    1          3      6e+05      2e+05  50.00
+Send                   19          1      2e+05      2e+05  16.67
+Send                   27          1      2e+05      2e+05  16.67
+Send                   12          1      2e+05      2e+05  16.67
+Send                    6          3         12          4   0.00
+Send                    4          3         12          4   0.00
+Send                   23          1          4          4   0.00
+Send                   21          1          4          4   0.00
+Send                   31          1          4          4   0.00
+Send                   29          1          4          4   0.00
+Send                   15          1          4          4   0.00
+Send                   13          1          4          4   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Collective Time (top twenty, descending) -------------------
+---------------------------------------------------------------------------
+No collective operations to report
+---------------------------------------------------------------------------
+@--- Aggregate Point-To-Point Sent (top twenty, descending) ---------------
+---------------------------------------------------------------------------
+Call                 MPI Sent %             Comm Size             Data Size
+Send                        100          0 -        7     131072 -   262143
+Send                      0.004          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Callsites: 32 --------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 0x7f1a5e41c202           [unknown]                Send
+  1   1 0x7f1a5e42646b           [unknown]                
+  2   0 0x7f1a5e41aa4a           [unknown]                Recv
+  2   1 0x7f1a5e4257ad           [unknown]                
+  3   0 0x7f1a5e41d87f           [unknown]                Type_free
+  3   1 0x7f1a5e4270b1           [unknown]                
+  4   0 0x7f1a5e41c202           [unknown]                Send
+  4   1 0x7f1a5e42646b           [unknown]                
+  5   0 0x7f1a5e41aa4a           [unknown]                Recv
+  5   1 0x7f1a5e4257ad           [unknown]                
+  6   0 0x7f1a5e41c202           [unknown]                Send
+  6   1 0x7f1a5e42646b           [unknown]                
+  7   0 0x7f1a5e41d73f           [unknown]                Type_commit
+  7   1 0x7f1a5e427031           [unknown]                
+  8   0 0x7f1a5e41aa4a           [unknown]                Recv
+  8   1 0x7f1a5e4257ad           [unknown]                
+  9   0 0x7f806a21aa4a           [unknown]                Recv
+  9   1 0x7f806a2257ad           [unknown]                
+ 10   0 0x7f806a21aa4a           [unknown]                Recv
+ 10   1 0x7f806a2257ad           [unknown]                
+ 11   0 0x7f806a21d87f           [unknown]                Type_free
+ 11   1 0x7f806a2270b1           [unknown]                
+ 12   0 0x7f806a21c202           [unknown]                Send
+ 12   1 0x7f806a22646b           [unknown]                
+ 13   0 0x7f806a21c202           [unknown]                Send
+ 13   1 0x7f806a22646b           [unknown]                
+ 14   0 0x7f806a21d73f           [unknown]                Type_commit
+ 14   1 0x7f806a227031           [unknown]                
+ 15   0 0x7f806a21c202           [unknown]                Send
+ 15   1 0x7f806a22646b           [unknown]                
+ 16   0 0x7f806a21aa4a           [unknown]                Recv
+ 16   1 0x7f806a2257ad           [unknown]                
+ 17   0 0x7ff19761aa4a           [unknown]                Recv
+ 17   1 0x7ff1976257ad           [unknown]                
+ 18   0 0x7ff19761aa4a           [unknown]                Recv
+ 18   1 0x7ff1976257ad           [unknown]                
+ 19   0 0x7ff19761c202           [unknown]                Send
+ 19   1 0x7ff19762646b           [unknown]                
+ 20   0 0x7ff19761d87f           [unknown]                Type_free
+ 20   1 0x7ff1976270b1           [unknown]                
+ 21   0 0x7ff19761c202           [unknown]                Send
+ 21   1 0x7ff19762646b           [unknown]                
+ 22   0 0x7ff19761d73f           [unknown]                Type_commit
+ 22   1 0x7ff197627031           [unknown]                
+ 23   0 0x7ff19761c202           [unknown]                Send
+ 23   1 0x7ff19762646b           [unknown]                
+ 24   0 0x7ff19761aa4a           [unknown]                Recv
+ 24   1 0x7ff1976257ad           [unknown]                
+ 25   0 0x7f399181aa4a           [unknown]                Recv
+ 25   1 0x7f39918257ad           [unknown]                
+ 26   0 0x7f399181aa4a           [unknown]                Recv
+ 26   1 0x7f39918257ad           [unknown]                
+ 27   0 0x7f399181c202           [unknown]                Send
+ 27   1 0x7f399182646b           [unknown]                
+ 28   0 0x7f399181d87f           [unknown]                Type_free
+ 28   1 0x7f39918270b1           [unknown]                
+ 29   0 0x7f399181c202           [unknown]                Send
+ 29   1 0x7f399182646b           [unknown]                
+ 30   0 0x7f399181d73f           [unknown]                Type_commit
+ 30   1 0x7f3991827031           [unknown]                
+ 31   0 0x7f399181c202           [unknown]                Send
+ 31   1 0x7f399182646b           [unknown]                
+ 32   0 0x7f399181aa4a           [unknown]                Recv
+ 32   1 0x7f39918257ad           [unknown]                
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all callsites, milliseconds): 32 -----------
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Recv                26       1     4.952     4.952     4.952      3      3
+Recv                18       1      4.83      4.83      4.83      2      2
+Recv                10       1     4.708     4.708     4.708      1      1
+Send                12       1    0.4115    0.4115    0.4115      1      1
+Send                 1       1    0.3646    0.3646    0.3646      0      0
+Send                19       1    0.3422    0.3422    0.3422      2      2
+Send                27       1    0.1477    0.1477    0.1477      3      3
+Type_commit          7       1    0.1373    0.1373    0.1373      0      0
+Type_commit         30       1    0.1334    0.1334    0.1334      3      3
+Recv                32       1    0.1236    0.1236    0.1236      3      3
+Type_commit         22       1    0.1185    0.1185    0.1185      2      2
+Type_commit         14       1    0.1106    0.1106    0.1106      1      1
+Recv                 8       1    0.1021    0.1021    0.1021      0      0
+Recv                16       1   0.09487   0.09487   0.09487      1      1
+Recv                24       1   0.09158   0.09158   0.09158      2      2
+Recv                 5       1   0.05802   0.05802   0.05802      0      0
+Send                 6       1   0.05055   0.05055   0.05055      0      0
+Type_free           28       1   0.04501   0.04501   0.04501      3      3
+Send                31       1   0.03816   0.03816   0.03816      3      3
+Recv                 2       1   0.03569   0.03569   0.03569      0      0
+Send                 4       1   0.03194   0.03194   0.03194      0      0
+Type_free            3       1   0.02945   0.02945   0.02945      0      0
+Type_free           20       1   0.02467   0.02467   0.02467      2      2
+Type_free           11       1   0.02457   0.02457   0.02457      1      1
+Send                23       1   0.02341   0.02341   0.02341      2      2
+Send                15       1   0.02338   0.02338   0.02338      1      1
+Recv                25       1    0.0188    0.0188    0.0188      3      3
+Send                29       1   0.01791   0.01791   0.01791      3      3
+Recv                 9       1   0.01486   0.01486   0.01486      1      1
+Recv                17       1   0.01212   0.01212   0.01212      2      2
+Send                21       1   0.01097   0.01097   0.01097      2      2
+Send                13       1   0.01096   0.01096   0.01096      1      1
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all callsites, sent bytes): 12 -----
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Send                 1       1     6e+05     6e+05     6e+05      0      0
+Send                12       1     2e+05     2e+05     2e+05      1      1
+Send                19       1     2e+05     2e+05     2e+05      2      2
+Send                27       1     2e+05     2e+05     2e+05      3      3
+Send                 4       1        12        12        12      0      0
+Send                 6       1        12        12        12      0      0
+Send                13       1         4         4         4      1      1
+Send                15       1         4         4         4      1      1
+Send                21       1         4         4         4      2      2
+Send                23       1         4         4         4      2      2
+Send                29       1         4         4         4      3      3
+Send                31       1         4         4         4      3      3
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

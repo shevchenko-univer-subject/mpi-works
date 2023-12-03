@@ -42,15 +42,13 @@ int main(int argc, char *argv[])
 	// INTIALIZATION
 	MPI_Init(&argc, &argv);
 	MPE_Init_log();
-	int ev1a, ev1b, ev2a, ev2b, ev3a, ev3b, ev4a, ev4b;
+	int ev1a, ev1b, ev2a, ev2b, ev3a, ev3b;
 	ev1a = MPE_Log_get_event_number();
 	ev1b = MPE_Log_get_event_number();
 	ev2a = MPE_Log_get_event_number();
 	ev2b = MPE_Log_get_event_number();
 	ev3a = MPE_Log_get_event_number();
 	ev3b = MPE_Log_get_event_number();
-	ev4a = MPE_Log_get_event_number();
-	ev4b = MPE_Log_get_event_number();
 
 	int wrank, wsize;
 	MPI_Comm_rank(MPI_COMM_WORLD, &wrank);
@@ -60,7 +58,6 @@ int main(int argc, char *argv[])
 		MPE_Describe_state(ev1a, ev1b, "Broadcast", "red");
 		MPE_Describe_state(ev2a, ev2b, "Compute", "blue");
 		MPE_Describe_state(ev3a, ev3b, "Reduce", "green");
-		MPE_Describe_state(ev4a, ev4b, "Sync", "orange");
 	}
 
 	const int nitems = 2;
@@ -76,11 +73,11 @@ int main(int argc, char *argv[])
 
 	int start, end, chunk_size;
 	participle *chunk, *particles;
+	int num_particles;
 
-	if (wrank == 0)
+	if(wrank == 0)
 	{
-
-		int num_particles = 1000;
+		num_particles = 100000;
 
 		particles = malloc(num_particles * sizeof(participle));
 		if (particles == NULL)
@@ -94,6 +91,11 @@ int main(int argc, char *argv[])
 			particles[i].position = (float)rand();
 			particles[i].velocity = (float)rand(); 
 		}
+	}
+
+	MPE_Log_event(ev1a, 0, "start broadcast");
+	if (wrank == 0)
+	{
 		calculatePartitionIndices(wrank, wsize, num_particles,
 				&start, &end, &chunk_size);
 		chunk = malloc(chunk_size * sizeof(participle));
@@ -104,7 +106,6 @@ int main(int argc, char *argv[])
 			int start_tmp, end_tmp, chunk_size_tmp;
 			calculatePartitionIndices(i, wsize, num_particles,
 					&start_tmp, &end_tmp, &chunk_size_tmp);
-			printf("will send on %d\n", i);
 
 			MPI_Send(&chunk_size_tmp, 1, MPI_INT, i, MPI_CHUNK_SIZE_TAG, MPI_COMM_WORLD);
 			MPI_Send(&start_tmp, 1, MPI_INT, i, MPI_START_TAG, MPI_COMM_WORLD);
@@ -112,21 +113,21 @@ int main(int argc, char *argv[])
 					mpi_participle_type, i, MPI_CHUNK_TAG, MPI_COMM_WORLD);
 		}
 	} else {
-		printf("will recv on %d\n", wrank);
 		MPI_Recv(&chunk_size, 1, MPI_INT, 0, MPI_CHUNK_SIZE_TAG, 
 				MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MPI_Recv(&start, 1, MPI_INT, 0, MPI_START_TAG, 
-				MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		chunk = malloc(chunk_size * sizeof(participle));
-		MPI_Recv(chunk, chunk_size, 
+				MPI_COMM_WORLD, MPI_STATUS_IGNORE); chunk = malloc(chunk_size * sizeof(participle)); MPI_Recv(chunk, chunk_size, 
 				mpi_participle_type, 0, MPI_CHUNK_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 	}
+	MPE_Log_event(ev1a, 0, "end broadcast");
 
+	MPE_Log_event(ev2a, 0, "start compute");
 	float time_interval = 10.0;
 	simulate_motion(chunk, chunk_size, time_interval);
+	MPE_Log_event(ev2a, 0, "end compute");
 
+	MPE_Log_event(ev3a, 0, "start reduce");
 	if(wrank != 0){
-		printf("2: will send on %d\n", wrank);
 		MPI_Send(&start, 1, MPI_INT, 0, MPI_START_TAG, MPI_COMM_WORLD);
 		MPI_Send(&chunk_size, 1, MPI_INT, 0, MPI_CHUNK_SIZE_TAG, MPI_COMM_WORLD);
 		MPI_Send(chunk, chunk_size, 
@@ -135,7 +136,6 @@ int main(int argc, char *argv[])
 		memcpy(particles, chunk, chunk_size * sizeof(participle));
 		for(int i = 1; i < wsize; i++) 
 		{
-			printf("2: will recv on %d\n", i);
 			int start_tmp, chunk_size_tmp;
 			MPI_Recv(&start_tmp, 1, MPI_INT, i, MPI_START_TAG, 
 					MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -145,11 +145,13 @@ int main(int argc, char *argv[])
 					mpi_participle_type, i, MPI_CHUNK_TAG, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		}
 	}
+	MPE_Log_event(ev3a, 0, "end reduce");
 
 	free(chunk);
 	if(wrank == 0)
 		free(particles);
 	MPI_Type_free(&mpi_participle_type);
+	MPE_Finish_log("./logs/graphlog");
 	MPI_Finalize();
 	return 0;
 }
