@@ -1,0 +1,274 @@
+@ mpiP
+@ Command : fox.o 
+@ Version                  : 3.5.0
+@ MPIP Build date          : Nov 13 2023, 22:03:28
+@ Start time               : 2023 12 07 05:09:14
+@ Stop time                : 2023 12 07 05:09:14
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -c -p -y -t 1.0 -k 2 -f ./logs
+@ Collector Rank           : 0
+@ Collector PID            : 448762
+@ Final Output Dir         : ./logs
+@ Report generation        : Single collector task
+
+---------------------------------------------------------------------------
+@--- Task Time Statistics (seconds) ---------------------------------------
+---------------------------------------------------------------------------
+                     AppTime           MPITime   MPI%   App Task   MPI Task
+Max                 0.074777          0.053543                 0          3
+Mean                0.074682          0.041066
+Min                 0.074588          0.019548                 1          0
+Stddev              0.000086          0.016157
+Aggregate           0.298727          0.164262  54.99
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%      Count    COV
+Recv                   51       17.6    5.90   10.72        125   0.00
+Recv                   25       17.6    5.89   10.71        125   0.00
+Recv                   48       17.5    5.84   10.63        125   0.00
+Recv                   22       17.4    5.84   10.62        125   0.00
+Sendrecv_replace       18       15.7    5.26    9.57          2   0.00
+Sendrecv_replace       44       15.7    5.25    9.55          2   0.00
+Bcast                  30       9.18    3.07    5.59          1   0.00
+Barrier                29       9.02    3.02    5.49          1   0.00
+Recv                   35       8.45    2.83    5.15        125   0.00
+Recv                   38       8.42    2.82    5.13        125   0.00
+Cart_rank               8       4.64    1.55    2.82        500   0.00
+Cart_rank              13       4.57    1.53    2.78        500   0.00
+Send                    7       3.87    1.29    2.35        375   0.00
+Send                   11       3.83    1.28    2.33        375   0.00
+Cart_create             4        2.2    0.74    1.34          1   0.00
+Cart_create            45       2.19    0.73    1.34          1   0.00
+Cart_create            19       2.07    0.69    1.26          1   0.00
+Cart_create            32       2.05    0.68    1.25          1   0.00
+Bcast                  49      0.297    0.10    0.18          1   0.00
+Bcast                  23      0.296    0.10    0.18          1   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Send                    7        375   1.88e+05        500  49.99
+Send                   11        375   1.88e+05        500  49.99
+Sendrecv_replace       18          2          8          4   0.00
+Sendrecv_replace       31          2          8          4   0.00
+Sendrecv_replace        3          2          8          4   0.00
+Sendrecv_replace       44          2          8          4   0.00
+Bcast                  30          1          4          4   0.00
+Bcast                  28          1          4          4   0.00
+Bcast                  23          1          4          4   0.00
+Bcast                  17          1          4          4   0.00
+Bcast                  15          1          4          4   0.00
+Bcast                   9          1          4          4   0.00
+Bcast                   2          1          4          4   0.00
+Bcast                  54          1          4          4   0.00
+Bcast                  49          1          4          4   0.00
+Bcast                  43          1          4          4   0.00
+Bcast                  41          1          4          4   0.00
+Bcast                  36          1          4          4   0.00
+---------------------------------------------------------------------------
+@--- Aggregate Collective Time (top twenty, descending) -------------------
+---------------------------------------------------------------------------
+Call                 MPI Time %             Comm Size             Data Size
+Bcast                    0.0292          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Aggregate Point-To-Point Sent (top twenty, descending) ---------------
+---------------------------------------------------------------------------
+Call                 MPI Sent %             Comm Size             Data Size
+Send                        100          0 -        7        256 -      511
+Sendrecv_replace        0.00853          0 -        7          0 -        7
+---------------------------------------------------------------------------
+@--- Callsites: 54 --------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 0x7fc6e2e1050f           [unknown]                Barrier
+  1   1 0x7fc6e2e209fa           [unknown]                
+  2   0 0x7fc6e2e106b6           [unknown]                Bcast
+  2   1 0x7fc6e2e20a8c           [unknown]                
+  3   0 0x7fc6e2e1c86a           [unknown]                Sendrecv_replace
+  3   1 0x7fc6e2e267b0           [unknown]                
+  4   0 0x7fc6e2e11196           [unknown]                Cart_create
+  4   1 0x7fc6e2e20edc           [unknown]                
+  5   0 0x7fc6e2e1102d           [unknown]                Cart_coords
+  5   1 0x7fc6e2e20e3c           [unknown]                
+  6   0 0x7fc6e2e1d73f           [unknown]                Type_commit
+  6   1 0x7fc6e2e27031           [unknown]                
+  7   0 0x7fc6e2e1c202           [unknown]                Send
+  7   1 0x7fc6e2e2646b           [unknown]                
+  8   0 0x7fc6e2e115a4           [unknown]                Cart_rank
+  8   1 0x7fc6e2e210e3           [unknown]                
+  9   0 0x7fc6e2e106b6           [unknown]                Bcast
+  9   1 0x7fc6e2e20a8c           [unknown]                
+ 10   0 0x7fc6e2e11854           [unknown]                Cart_sub
+ 10   1 0x7fc6e2e21203           [unknown]                
+ 11   0 0x7fc6e2e1c202           [unknown]                Send
+ 11   1 0x7fc6e2e2646b           [unknown]                
+ 12   0 0x7fc6e2e11854           [unknown]                Cart_sub
+ 12   1 0x7fc6e2e21203           [unknown]                
+ 13   0 0x7fc6e2e115a4           [unknown]                Cart_rank
+ 13   1 0x7fc6e2e210e3           [unknown]                
+ 14   0 0x7fc6e2e1d73f           [unknown]                Type_commit
+ 14   1 0x7fc6e2e27031           [unknown]                
+ 15   0 0x7fc6e2e106b6           [unknown]                Bcast
+ 15   1 0x7fc6e2e20a8c           [unknown]                
+ 16   0 0x7fe58921050f           [unknown]                Barrier
+ 16   1 0x7fe5892209fa           [unknown]                
+ 17   0 0x7fe5892106b6           [unknown]                Bcast
+ 17   1 0x7fe589220a8c           [unknown]                
+ 18   0 0x7fe58921c86a           [unknown]                Sendrecv_replace
+ 18   1 0x7fe5892267b0           [unknown]                
+ 19   0 0x7fe589211196           [unknown]                Cart_create
+ 19   1 0x7fe589220edc           [unknown]                
+ 20   0 0x7fe58921102d           [unknown]                Cart_coords
+ 20   1 0x7fe589220e3c           [unknown]                
+ 21   0 0x7fe58921d73f           [unknown]                Type_commit
+ 21   1 0x7fe589227031           [unknown]                
+ 22   0 0x7fe58921aa4a           [unknown]                Recv
+ 22   1 0x7fe5892257ad           [unknown]                
+ 23   0 0x7fe5892106b6           [unknown]                Bcast
+ 23   1 0x7fe589220a8c           [unknown]                
+ 24   0 0x7fe589211854           [unknown]                Cart_sub
+ 24   1 0x7fe589221203           [unknown]                
+ 25   0 0x7fe58921aa4a           [unknown]                Recv
+ 25   1 0x7fe5892257ad           [unknown]                
+ 26   0 0x7fe589211854           [unknown]                Cart_sub
+ 26   1 0x7fe589221203           [unknown]                
+ 27   0 0x7fe58921d73f           [unknown]                Type_commit
+ 27   1 0x7fe589227031           [unknown]                
+ 28   0 0x7fe5892106b6           [unknown]                Bcast
+ 28   1 0x7fe589220a8c           [unknown]                
+ 29   0 0x7fe7b061050f           [unknown]                Barrier
+ 29   1 0x7fe7b06209fa           [unknown]                
+ 30   0 0x7fe7b06106b6           [unknown]                Bcast
+ 30   1 0x7fe7b0620a8c           [unknown]                
+ 31   0 0x7fe7b061c86a           [unknown]                Sendrecv_replace
+ 31   1 0x7fe7b06267b0           [unknown]                
+ 32   0 0x7fe7b0611196           [unknown]                Cart_create
+ 32   1 0x7fe7b0620edc           [unknown]                
+ 33   0 0x7fe7b061102d           [unknown]                Cart_coords
+ 33   1 0x7fe7b0620e3c           [unknown]                
+ 34   0 0x7fe7b061d73f           [unknown]                Type_commit
+ 34   1 0x7fe7b0627031           [unknown]                
+ 35   0 0x7fe7b061aa4a           [unknown]                Recv
+ 35   1 0x7fe7b06257ad           [unknown]                
+ 36   0 0x7fe7b06106b6           [unknown]                Bcast
+ 36   1 0x7fe7b0620a8c           [unknown]                
+ 37   0 0x7fe7b0611854           [unknown]                Cart_sub
+ 37   1 0x7fe7b0621203           [unknown]                
+ 38   0 0x7fe7b061aa4a           [unknown]                Recv
+ 38   1 0x7fe7b06257ad           [unknown]                
+ 39   0 0x7fe7b0611854           [unknown]                Cart_sub
+ 39   1 0x7fe7b0621203           [unknown]                
+ 40   0 0x7fe7b061d73f           [unknown]                Type_commit
+ 40   1 0x7fe7b0627031           [unknown]                
+ 41   0 0x7fe7b06106b6           [unknown]                Bcast
+ 41   1 0x7fe7b0620a8c           [unknown]                
+ 42   0 0x7f327e81050f           [unknown]                Barrier
+ 42   1 0x7f327e8209fa           [unknown]                
+ 43   0 0x7f327e8106b6           [unknown]                Bcast
+ 43   1 0x7f327e820a8c           [unknown]                
+ 44   0 0x7f327e81c86a           [unknown]                Sendrecv_replace
+ 44   1 0x7f327e8267b0           [unknown]                
+ 45   0 0x7f327e811196           [unknown]                Cart_create
+ 45   1 0x7f327e820edc           [unknown]                
+ 46   0 0x7f327e81102d           [unknown]                Cart_coords
+ 46   1 0x7f327e820e3c           [unknown]                
+ 47   0 0x7f327e81d73f           [unknown]                Type_commit
+ 47   1 0x7f327e827031           [unknown]                
+ 48   0 0x7f327e81aa4a           [unknown]                Recv
+ 48   1 0x7f327e8257ad           [unknown]                
+ 49   0 0x7f327e8106b6           [unknown]                Bcast
+ 49   1 0x7f327e820a8c           [unknown]                
+ 50   0 0x7f327e811854           [unknown]                Cart_sub
+ 50   1 0x7f327e821203           [unknown]                
+ 51   0 0x7f327e81aa4a           [unknown]                Recv
+ 51   1 0x7f327e8257ad           [unknown]                
+ 52   0 0x7f327e811854           [unknown]                Cart_sub
+ 52   1 0x7f327e821203           [unknown]                
+ 53   0 0x7f327e81d73f           [unknown]                Type_commit
+ 53   1 0x7f327e827031           [unknown]                
+ 54   0 0x7f327e8106b6           [unknown]                Bcast
+ 54   1 0x7f327e820a8c           [unknown]                
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all callsites, milliseconds): 54 -----------
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Recv                51       1     17.62     17.62     17.62      3      3
+Recv                25       1      17.6      17.6      17.6      2      2
+Recv                48       1     17.45     17.45     17.45      3      3
+Recv                22       1     17.44     17.44     17.44      2      2
+Sendrecv_replace    18       1     15.72     15.72     15.72      2      2
+Sendrecv_replace    44       1     15.69     15.69     15.69      3      3
+Bcast               30       1     9.177     9.177     9.177      1      1
+Barrier             29       1     9.019     9.019     9.019      1      1
+Recv                35       1     8.454     8.454     8.454      1      1
+Recv                38       1     8.421     8.421     8.421      1      1
+Cart_rank            8       1     4.639     4.639     4.639      0      0
+Cart_rank           13       1     4.566     4.566     4.566      0      0
+Send                 7       1     3.866     3.866     3.866      0      0
+Send                11       1     3.829     3.829     3.829      0      0
+Cart_create          4       1     2.204     2.204     2.204      0      0
+Cart_create         45       1     2.193     2.193     2.193      3      3
+Cart_create         19       1     2.068     2.068     2.068      2      2
+Cart_create         32       1     2.046     2.046     2.046      1      1
+Bcast               49       1    0.2965    0.2965    0.2965      3      3
+Bcast               23       1    0.2956    0.2956    0.2956      2      2
+Bcast               36       1    0.2918    0.2918    0.2918      1      1
+Cart_sub            26       1   0.08902   0.08902   0.08902      2      2
+Cart_sub            52       1   0.08887   0.08887   0.08887      3      3
+Cart_sub            39       1   0.08095   0.08095   0.08095      1      1
+Cart_sub            12       1   0.07889   0.07889   0.07889      0      0
+Barrier             16       1   0.06113   0.06113   0.06113      2      2
+Sendrecv_replace     3       1   0.05877   0.05877   0.05877      0      0
+Sendrecv_replace    31       1   0.05759   0.05759   0.05759      1      1
+Cart_sub            50       1   0.05554   0.05554   0.05554      3      3
+Cart_sub            24       1   0.05394   0.05394   0.05394      2      2
+Cart_sub            10       1   0.05216   0.05216   0.05216      0      0
+Cart_sub            37       1   0.05214   0.05214   0.05214      1      1
+Bcast                2       1   0.04964   0.04964   0.04964      0      0
+Type_commit         40       1   0.04705   0.04705   0.04705      1      1
+Type_commit         14       1   0.04471   0.04471   0.04471      0      0
+Bcast               17       1   0.04425   0.04425   0.04425      2      2
+Cart_coords          5       1    0.0419    0.0419    0.0419      0      0
+Cart_coords         33       1   0.04122   0.04122   0.04122      1      1
+Barrier             42       1   0.04045   0.04045   0.04045      3      3
+Bcast                9       1   0.03671   0.03671   0.03671      0      0
+Barrier              1       1   0.03504   0.03504   0.03504      0      0
+Type_commit         53       1   0.03409   0.03409   0.03409      3      3
+Type_commit         27       1   0.02818   0.02818   0.02818      2      2
+Cart_coords         20       1   0.02782   0.02782   0.02782      2      2
+Cart_coords         46       1   0.02691   0.02691   0.02691      3      3
+Bcast               15       1   0.02453   0.02453   0.02453      0      0
+Type_commit         34       1   0.02251   0.02251   0.02251      1      1
+Type_commit          6       1   0.02227   0.02227   0.02227      0      0
+Bcast               54       1   0.02106   0.02106   0.02106      3      3
+Bcast               41       1   0.01697   0.01697   0.01697      1      1
+Bcast               43       1   0.01452   0.01452   0.01452      3      3
+Bcast               28       1   0.01417   0.01417   0.01417      2      2
+Type_commit         47       1    0.0131    0.0131    0.0131      3      3
+Type_commit         21       1   0.01309   0.01309   0.01309      2      2
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all callsites, sent bytes): 18 -----
+---------------------------------------------------------------------------
+Name              Site   Tasks       Max      Mean       Min MaxRnk MinRnk
+Send                 7       1 1.875e+05 1.875e+05 1.875e+05      0      0
+Send                11       1 1.875e+05 1.875e+05 1.875e+05      0      0
+Sendrecv_replace     3       1         8         8         8      0      0
+Sendrecv_replace    18       1         8         8         8      2      2
+Sendrecv_replace    31       1         8         8         8      1      1
+Sendrecv_replace    44       1         8         8         8      3      3
+Bcast                2       1         4         4         4      0      0
+Bcast                9       1         4         4         4      0      0
+Bcast               15       1         4         4         4      0      0
+Bcast               17       1         4         4         4      2      2
+Bcast               23       1         4         4         4      2      2
+Bcast               28       1         4         4         4      2      2
+Bcast               30       1         4         4         4      1      1
+Bcast               36       1         4         4         4      1      1
+Bcast               41       1         4         4         4      1      1
+Bcast               43       1         4         4         4      3      3
+Bcast               49       1         4         4         4      3      3
+Bcast               54       1         4         4         4      3      3
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------
